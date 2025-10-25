@@ -4,8 +4,22 @@ pub fn factorial(n: u32) -> u32 {
     // interprets as "I'll get back to this later", thus
     // suppressing type errors.
     // It panics at runtime.
-    todo!()
-}
+
+    // 1. conseguir el número anterior ✅
+    // 2. Multiplicar el número actual por el anterior y guradaarlo en variable
+    // 3. multiplicar el valor de esa variable por el número actual.
+
+    // 5 x 4 = 20 -> 20 * 3 = 60 -> 60 * 2 -> 120 * 1 -> 120!
+
+    let mut current_num = n;
+    let mut current_factorial = n;
+
+    while current_num > 1 {
+        current_num -= 1;
+        current_factorial *= current_num;
+    }
+
+k}
 
 #[cfg(test)]
 mod tests {

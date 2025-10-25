@@ -10,6 +10,33 @@
 //
 // Use only what you learned! No loops yet, so you'll have to use recursion!
 
+fn factorial(num: u32) -> u32 {
+    if num == 0 || num == 1 {
+        return 1;
+    } else {
+        fn multiply_by_prev_num(factorial_multiplication: u32, num: u32) -> u32 {
+            let decreased_number = num - 1;
+
+            if decreased_number > 1 {
+                let multiplication = factorial_multiplication * (decreased_number);
+
+                multiply_by_prev_num(multiplication, decreased_number)
+            } else {
+                factorial_multiplication
+            }
+        }
+
+        return multiply_by_prev_num(num, num);
+    }
+}
+
+fn main() {
+    print!("Holaaaaa");
+
+    factorial(5);
+}
+
+
 #[cfg(test)]
 mod tests {
     use crate::factorial;
