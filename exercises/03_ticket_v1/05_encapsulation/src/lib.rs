@@ -34,8 +34,33 @@ pub mod ticket {
         //  - `title` that returns the `title` field.
         //  - `description` that returns the `description` field.
         //  - `status` that returns the `status` field.
+        pub fn title(self) -> String {
+            self.title
+        }
+
+        pub fn description(self) -> String {
+            self.description
+        }
+
+        pub fn status(self) -> String {
+            self.status
+        }
     }
 }
+
+fn main(){
+use crate::ticket::Ticket;
+
+let ticket = Ticket :: new("".into(), "".into(), "".into());
+
+    if ticket.status() == "To-Do" {
+    // We haven't covered the `println!` macro yet,
+    // but for now it's enough to know that it prints 
+    // a (templated) message to the console
+    println!("Your next task is: {}", ticket.title());
+}
+
+} 
 
 #[cfg(test)]
 mod tests {
