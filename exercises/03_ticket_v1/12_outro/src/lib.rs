@@ -11,3 +11,29 @@
 // Integration here has a very specific meaning: they test **the public API** of your project.
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
+
+struct Order {
+    product_name: String, 
+    quantity: u64, 
+    unit_price: u16,
+}
+
+impl Order {
+
+    //Implemnet methods to validate the setters and the new constructor.
+    
+    fn todo!()
+
+    fn product_name(&self) -> &String {
+        &self.product_name
+    }
+
+    fn quantity(&self) -> &u64 {
+        &self.quantity
+    }
+
+    fn unit_price(&self) -> &u16 {
+        &self.unit_price
+    }
+
+}
