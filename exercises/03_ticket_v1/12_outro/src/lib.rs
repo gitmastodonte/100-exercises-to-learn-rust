@@ -12,28 +12,91 @@
 // You'll need to pay attention to the visibility of your types and methods; integration
 // tests can't access private or `pub(crate)` items.
 
-struct Order {
-    product_name: String, 
-    quantity: u64, 
+pub struct Order {
+    product_name: String,
+    quantity: u64,
     unit_price: u16,
 }
 
 impl Order {
-
     //Implemnet methods to validate the setters and the new constructor.
-    
-    fn todo!()
+    fn validate_product_name(product_name: &String) {
+        //   The product name can't be empty and it can't be longer than 300 bytes.
 
-    fn product_name(&self) -> &String {
+        if product_name.is_empty() || product_name.len() > 300 {
+            panic!("The product name can't be empty and it can't be longer than 300 bytes")
+        }
+    }
+
+    fn validate_quantity(quantity: &u64) {
+        //   The quantity must be strictly greater than zero.
+
+        if *quantity <= 0 {
+            panic!("The quantity must be greater than zero")
+        }
+    }
+
+    fn validate_unit_price(unit_price: &u16) {
+        //   The unit price is in cents and must be strictly greater than zero.
+
+        if *unit_price <= 0 {
+            panic!("The unit_price must be greater than zero")
+        }
+    }
+
+    fn validate_order(product_name: &String, quantity: &u64, unit_price: &u16) {
+        Order::validate_product_name(product_name);
+        Order::validate_quantity(quantity);
+        Order::validate_unit_price(unit_price);
+    }
+
+    pub fn new(product_name: String, quantity: u64, unit_price: u16) -> Order {
+        Order::validate_order(&product_name, &quantity, &unit_price);
+
+        Order {
+            product_name: product_name,
+            quantity: quantity,
+            unit_price: unit_price,
+        }
+    }
+
+    pub fn product_name(&self) -> &String {
         &self.product_name
     }
 
-    fn quantity(&self) -> &u64 {
+    pub fn quantity(&self) -> &u64 {
         &self.quantity
     }
 
-    fn unit_price(&self) -> &u16 {
+    pub fn unit_price(&self) -> &u16 {
         &self.unit_price
     }
+   
+    pub fn set_product_name(&mut self, new_product_name: String) -> &String {
+        Order::validate_product_name(&new_product_name);
 
+        self.product_name = new_product_name;
+
+        return &self.product_name;
+    }
+ 
+    pub fn set_quantity(&mut self, new_quantity: u64) -> &u64 {
+        Order::validate_quantity(&new_quantity);
+
+        self.quantity = new_quantity;
+
+        return &self.quantity;
+    }
+
+    pub fn set_unit_price(&mut self, new_unit_price: u16) -> &u16 {
+        Order::validate_unit_price(&new_unit_price);
+
+        self.unit_price = new_unit_price;
+
+        return &self.unit_price;
+    }
+
+    pub fn total(&self) -> u64 {
+        self.quantity * self.unit_price as u64
+    }
 }
