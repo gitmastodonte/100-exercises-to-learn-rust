@@ -19,7 +19,7 @@ pub fn factorial(n: u32) -> u32 {
         current_factorial *= current_num;
     }
 
-k}
+}
 
 #[cfg(test)]
 mod tests {
