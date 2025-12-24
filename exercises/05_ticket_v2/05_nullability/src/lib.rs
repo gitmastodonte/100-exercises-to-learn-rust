@@ -35,6 +35,7 @@ impl Ticket {
             status,
         }
     }
+    
     pub fn assigned_to(&self) -> Option<&String> {
         if let Status::InProgress { assigned_to } = &self.status {
             return assigned_to.as_ref();
@@ -48,7 +49,7 @@ fn main() {
         "Título".into(),
         "Descripción".into(),
         Status::InProgress {
-            assigned_to: "asdf".into(),
+            assigned_to: Some("asdf".into()),
         },
     );
 }
@@ -76,7 +77,7 @@ mod tests {
             valid_title(),
             valid_description(),
             Status::InProgress {
-                assigned_to: "Alice".to_string(),
+                assigned_to: Some("Alice".to_string()),
             },
         );
         assert_eq!(ticket.assigned_to(), Some(&"Alice".to_string()));
