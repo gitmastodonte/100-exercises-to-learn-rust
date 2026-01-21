@@ -2,7 +2,87 @@
 //   enforcing that the description is not empty and is not longer than 500 bytes.
 //   Implement the traits required to make the tests pass too.
 
+use std::fmt::Display;
+use thiserror::Error;
+
+use crate::Ticket;
+
+#[derive(Debug, Clone, PartialEq)]
 pub struct TicketDescription(String);
+
+impl Display for TicketDescription {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum TicketDescriptionError {
+    #[error("The description cannot be longer than 500 bytes")]
+    DescriptionTooLong,
+    #[error("The description cannot be empty")]
+    DescriptionIsEmpty,
+}
+
+impl TicketDescription {
+    fn new(description: String) -> Result<Self, TicketDescriptionError> {
+        if description.is_empty() {
+            return Err(TicketDescriptionError::DescriptionIsEmpty);
+        }
+
+        if description.len() > 50 {
+            return Err(TicketDescriptionError::DescriptionTooLong);
+        }
+
+        return Ok(TicketDescription(description));
+    }
+}
+
+// impl From<String> for TicketDescription {
+//     fn from(value: String) -> TicketDescription {
+//         match TicketDescription::new(value.clone()) {
+//             Ok(description) => description,
+//             Err(err) => match err {
+//                 TicketDescriptionError::DescriptionIsEmpty => TicketDescription("".into()),
+//                 TicketDescriptionError::DescriptionTooLong => TicketDescription(value.clone().split_at(50).0.into()),
+//             },
+//         }
+//     }
+// }
+
+// impl From<&str> for TicketDescription {
+//     fn from(value: &str) -> TicketDescription {
+//         match TicketDescription::new(value.into()) {
+//             Ok(description) => description,
+//             Err(err) => match err {
+//                 TicketDescriptionError::DescriptionIsEmpty => TicketDescription("".into()),
+//                 TicketDescriptionError::DescriptionTooLong => TicketDescription(value.clone().split_at(50).0.into()),
+//             },
+//         }
+//     }
+// }
+
+impl TryFrom<String> for TicketDescription {
+    type Error = TicketDescriptionError;
+
+    fn try_from(value: String) -> Result<TicketDescription, TicketDescriptionError> {
+        match TicketDescription::new(value.clone()) {
+            Ok(description) => Ok(description),
+            Err(err) => Err(err),
+        }
+    }
+}
+
+impl TryFrom<&str> for TicketDescription {
+    type Error = TicketDescriptionError;
+
+    fn try_from(value: &str) -> Result<TicketDescription, TicketDescriptionError> {
+        match TicketDescription::new(value.into()) {
+            Ok(description) => Ok(description),
+            Err(err) => Err(err),
+        }
+    }
+}
 
 #[cfg(test)]
 mod tests {

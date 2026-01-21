@@ -1,7 +1,7 @@
 // TODO: you have something to do in each of the modules in this crate!
+mod title;
 mod description;
 mod status;
-mod title;
 
 // A common pattern in Rust is to split code into multiple (private) modules
 // and then re-export the public parts of those modules at the root of the crate.

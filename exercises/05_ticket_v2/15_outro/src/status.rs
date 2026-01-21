@@ -1,10 +1,67 @@
 // TODO: Implement `TryFrom<String>` and `TryFrom<&str>` for the `Status` enum.
 //  The parsing should be case-insensitive.
 
+use std::fmt::Display;
+use thiserror::Error;
+
+#[derive(Debug, Clone, PartialEq)]
 pub enum Status {
     ToDo,
     InProgress,
     Done,
+}
+
+impl Display for Status {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self)
+    }
+}
+
+#[derive(Debug, Error)]
+pub enum StatusError {
+    #[error("Invalid status")]
+    StatusIsInvalid,
+}
+
+impl Status {
+    fn new(status: String) -> Result<Self, StatusError> {
+        let status = Status::try_from(status)?;
+        return Ok(status);
+    }
+}
+
+impl TryFrom<String> for Status {
+    type Error = StatusError;
+    fn try_from(value: String) -> Result<Self, Self::Error> {
+        let status = value.trim().to_lowercase();
+
+        return if status == "todo" {
+            Ok(Status::ToDo)
+        } else if status == "done" {
+            Ok(Status::Done)
+        } else if status == "inprogress" {
+            Ok(Status::InProgress)
+        } else {
+            Err(StatusError::StatusIsInvalid)
+        };
+    }
+}
+
+impl TryFrom<&str> for Status {
+    type Error = StatusError;
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        let status = value.trim().to_lowercase();
+
+        return if status == "todo" {
+            Ok(Status::ToDo)
+        } else if status == "done" {
+            Ok(Status::Done)
+        } else if status == "inprogress" {
+            Ok(Status::InProgress)
+        } else {
+            Err(StatusError::StatusIsInvalid)
+        };
+    }
 }
 
 #[cfg(test)]
