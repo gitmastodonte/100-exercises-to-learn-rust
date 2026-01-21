@@ -9,3 +9,16 @@ use packages::hello_world;
 fn main() {
     hello_world();
 }
+
+
+/*
+packages 
+    -binary crates
+        puedes compilarlos y convertirlos en ejecutables
+        tienen un main
+    -library crates
+        no puedes ejecutarlos, pero puedes importar su código
+        el código fuente suele estar en src
+        src/lib.rs cargo asume que es un library crates
+        src/main.rs cargo asume que es un binary crate
+*/
